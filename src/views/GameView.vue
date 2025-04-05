@@ -4,19 +4,15 @@
     </div>
 </template>
 
+<style>
+.game-view {
+  width: 1280px;
+  height: 720px;
+  background-color: #5fc9ea;
+}
+</style>
 
 <script>
-// MIXINS
-// import { StoreMixin } from "@/mixins/StoreMixin.js";
-
-// COMPONENTS
-// import Button from "@/components/Button.vue";
-
-// VUEX
-// import { mapState } from "vuex";
-// import { mapGetters } from "vuex";
-// import { mapActions } from "vuex";
-
 export default {
   name: "GameView",
   components: {
