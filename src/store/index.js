@@ -7,6 +7,7 @@ export default createStore({
         },
         round: {
             started: false,
+            time: 0,
             score: 0,
         },
     },
@@ -19,7 +20,7 @@ export default createStore({
         },
     },
     mutations: {
-        startRound(state, value) {
+        startRound(state) {
             state.round.score = 0;
             state.round.time = 0;
             state.round.started = true;
@@ -30,6 +31,5 @@ export default createStore({
             context.commit("startRound");
         },
     },
-    modules: {
-    }
+    modules: {}
 })
