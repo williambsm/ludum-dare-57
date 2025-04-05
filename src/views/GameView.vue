@@ -1,6 +1,6 @@
 <template>
     <div class="screen game-view">
-        <h1>GAME STARTED</h1>
+      <Player />
     </div>
 </template>
 
@@ -13,10 +13,12 @@
 </style>
 
 <script>
+import Player from "@/components/actors/Player.vue";
+
 export default {
   name: "GameView",
   components: {
-    // Button,
+    Player
   },
   data() {
     return {};
