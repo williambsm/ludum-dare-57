@@ -6,6 +6,7 @@
 
 <style>
 .game-view {
+  position: relative;
   width: 1280px;
   height: 720px;
   background-color: #5fc9ea;
