@@ -1,5 +1,7 @@
 <template>
-  <div class="enemy-container"></div>
+  <div class="enemy-container">
+    <Enemy />
+  </div>
 </template>
 
 <style>
@@ -11,9 +13,11 @@
 </style>
 
 <script>
+import Enemy from "@/components/actors/Enemy.vue";
+
 export default {
   name: 'EnemyContainer',
-  components: {},
+  components: {Enemy},
   data() {
     return {}
   },
