@@ -1,7 +1,7 @@
 <template>
     <div class="screen title-view">
         <h1>{{ gameName }}</h1>
-        <Button>Start Game</Button>
+        <Button @click="startGame()">Start Game</Button>
     </div>
 </template>
 
@@ -16,7 +16,7 @@ import Button from "@/components/ui/Button.vue";
 // VUEX
 // import { mapState } from "vuex";
 import { mapGetters } from "vuex";
-// import { mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "TitleView",
@@ -28,6 +28,9 @@ export default {
   },
   computed: {
     ...mapGetters(["gameName"]),
+  },
+  methods: {
+    ...mapActions(["startGame"]),
   },
 };
 </script>

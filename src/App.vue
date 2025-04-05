@@ -1,6 +1,7 @@
 <template>
   <main>
-    <TitleView />  
+    <TitleView v-if="!roundStarted"/>  
+    <GameView v-else />  
   </main>
 </template>
 
@@ -10,6 +11,7 @@
 
 // COMPONENTS
 import TitleView from "@/views/TitleView.vue";
+import GameView from "@/views/GameView.vue";
 
 // VUEX
 // import { mapState } from "vuex";
@@ -20,12 +22,13 @@ export default {
   name: "App",
   components: {
     TitleView,
+    GameView,
   },
   data() {
     return {};
   },
   computed: {
-    ...mapGetters(["gameName"]),
+    ...mapGetters(["gameName", "roundStarted"]),
   },
 };
 </script>
