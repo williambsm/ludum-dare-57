@@ -22,8 +22,7 @@ export default {
   data() {
     return {
       name: "Dumpy",
-      isMoving: false,
-      velocity: 0,
+      move: new Set(),
       moveSpeed: .30,
       isParalyzed: false,
       position: 50,
@@ -32,32 +31,35 @@ export default {
   computed: {},
   methods: {
     update() {
-      if (this.isMoving && !this.isParalyzed) {
-        this.position = Math.min(100, Math.max(0, this.position + this.velocity));
+      if (this.move.size && !this.isParalyzed) {
+        const direction = [...this.move].pop();
+
+        if (direction === 'left') {
+          this.position = Math.min(100, Math.max(0, this.position + (this.moveSpeed * -1)));
+        } else if (direction === 'right') {
+          this.position = Math.min(100, Math.max(0, this.position + this.moveSpeed));
+        }
       }
 
       requestAnimationFrame(this.update);
     },
     setMove(e) {
-      if (this.isMoving) return;
-
-      if (e.key === 'a' || e.key === 'ArrowLeft') {
-        this.isMoving = true;
-        this.velocity = this.moveSpeed * -1;
+      if (!this.move.has('left') && ['a', 'A', 'ArrowLeft'].includes(e.key)) {
+        this.move.add('left');
       }
 
-      if (e.key === 'd' || e.key === 'ArrowRight') {
-        this.isMoving = true;
-        this.velocity = this.moveSpeed;
-
-        this.position++;
+      if (!this.move.has('right') && ['d', 'D', 'ArrowRight'].includes(e.key)) {
+        this.move.add('right');
       }
     },
     stopMove(e) {
-      if (this.isMoving) {
-        if (['a', 'd', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-          this.isMoving = false;
-          this.velocity = 0;
+      if (this.move.size) {
+        if (this.move.has('left') && ['a', 'A', 'ArrowLeft'].includes(e.key)) {
+          this.move.delete('left');
+        }
+
+        if (this.move.has('right') && ['d', 'D', 'ArrowRight'].includes(e.key)) {
+          this.move.delete('right');
         }
       }
     }
