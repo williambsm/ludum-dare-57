@@ -20,7 +20,6 @@ export default createStore({
             wallHeight: 100,
             map:[]
         },
-
     },
     getters: {
         gameName(state) {
@@ -69,25 +68,24 @@ export default createStore({
     },
     actions: {
         startGame(context) {
-            context.commit("setRound");
+            context.commit('setRound');
         },
         updateTimer(context, value) {
-            context.commit("setRoundTimer", value);
+            context.commit('setRoundTimer', value);
         },
         updateDepth(context, value) {
-            context.commit("setRoundDepth", value);
+            context.commit('setRoundDepth', value);
         },
-
         removeWall(context){
-            context.commit("removeWall");
-            context.dispatch("addWall");
+            context.commit('removeWall');
+            context.dispatch('addWall');
         },
         addWall(context){
             // might add some logic here to change 'biomes' at certain depths, etc. this might change the neww wall's height
             
             const newWallHeight = context.getters.wallHeight;
 
-            var lastWall = context.getters.wallCount == 0 
+            let lastWall = context.getters.wallCount === 0
             ? { id : 0, bottom: 0, height: 0 } 
             : context.getters.lastWall;
 
@@ -96,9 +94,9 @@ export default createStore({
                 height: newWallHeight, 
                 // bottom: lastWall.height + lastWall.bottom,
                 bottom: newWallHeight * (lastWall.id),
-                biome: "beach",
+                biome: 'beach',
             };
-            context.commit("addWall", newWall);
+            context.commit('addWall', newWall);
         },
     },
     modules: {}
