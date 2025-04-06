@@ -9,10 +9,16 @@
 #app {
   height:100vh;
   width:100vw;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 .screen {
-  height: 100%;
-  width: 100%;
+  /* height: 100%; */
+  /* width: 100%; */
+  
+  width: 1280px;
+  height: 720px;
   display: flex;
   flex-direction: column;
   justify-content: center;
