@@ -8,7 +8,7 @@ export default createStore({
 
     difficulty: {
       easy: {
-        initialDepth: 500,
+        initialDepth: 100,
         playerSize: 5,
       },
       medium: {
@@ -20,6 +20,45 @@ export default createStore({
         playerSize: 8,
       },
     },
+
+		biomes : {
+			surface : {
+				depth: {
+					easy : 0,
+					medium : 0,
+					hard : 0,
+				},
+				music: "surface",
+				enemies: [],
+			},
+			reef : {
+				depth: {
+					easy : 25,
+					medium : 200,
+					hard : 200,
+				},
+				music: "reef",
+				enemies: ['fish', 'jelly'],
+			},
+			gorge : {
+				depth: {
+					easy : 50,
+					medium : 300,
+					hard : 300,
+				},
+				music: "gorge",
+				enemies: ['swordfish','urchin'],
+			},
+			abyss : {
+				depth: {
+					easy : 90,
+					medium : 500,
+					hard : 500,
+				},
+				music: "abyss",
+				enemies: ['eel', 'puffer'],
+			},
+		},
 
     speedFactor: 0.5,
 
@@ -45,13 +84,52 @@ export default createStore({
     gameName(state) {
       return state.game.name;
     },
+		
+		
+    roundStarted(state) {
+      return state.round !== null;
+    },
 
+
+
+    gameStarted(state) {
+      return state.round !== null;
+    },
+
+		depth(state, getters){
+			if(!getters.gameStarted) return null;
+      return state.round.depth;
+		},
+
+		difficulty(state, getters){
+			if(!getters.gameStarted) return null;
+      return state.round.difficulty;
+		},
+		biomeDepths(state, getters){
+			if(!getters.gameStarted) return {};
+			return Object.entries(state.biomes).reduce((acc, [key, value]) => {
+				acc[value.depth[getters.difficulty]] = key;
+				return acc;
+			}, {});			
+		},
+		currentBiome(state, getters){
+			if(!getters.gameStarted) return null;
+				 let biome = "surface";
+				 for (const [minDepth, biomeName] of Object.entries(getters.biomeDepths)) {
+						 if (getters.depth >= minDepth) {
+								 biome = biomeName;
+						 }
+				 }		 
+				 return biome;
+		},
+		currentBiomeEnemyList(state, getters){
+			if(!getters.gameStarted) return [];
+			return state.biomes[getters.currentBiome].enemies;	 
+		},	
+		
 		// ROUND
     roundCount(state) {
       return state.rounds;
-    },
-    roundStarted(state) {
-      return state.round !== null;
     },
     roundPlayer(state, getters) {
 			if(!getters.roundStarted) return null;
@@ -164,7 +242,6 @@ export default createStore({
                     id: state.round.wallId,
                     height: state.round.wallHeight,
                     bottom: state.round.wallHeight * state.round.map.length,
-                    biome: "beach",
                   };
                   state.round.map.push(newWall);
                 } else if (entry.target.classList.contains("enemy")) {
@@ -235,7 +312,7 @@ export default createStore({
         id: `${context.getters.roundCount}-${context.getters.wallId}`,
         height: context.getters.wallHeight,
         bottom: context.getters.wallHeight * context.getters.walls.length,
-        biome: "beach",
+        biome: context.getters.currentBiome,
       };
       context.commit("addWall", newWall);
     },

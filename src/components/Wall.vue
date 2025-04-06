@@ -13,13 +13,18 @@
       border-top-width: 10px;
       border-top-color: #B9997A;
   }
+  .wall.abyss{
+      background: linear-gradient(to bottom, #884466, #664455);
+  }
+  .wall.gorge{
+      background: linear-gradient(to bottom, #665844, #332D23);
+  }
+
   .wall.left{
     border-radius: 0 5px 30% 0;
   }
   .wall.right{
     border-radius: 5px 0 0 30% ;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
   }
 </style>
 
