@@ -29,6 +29,7 @@ export default {
       // Determine what enemy to spawn based on depth/region, etc.
       const enemyConfig = {
         id: `${this.roundCount}-${this.enemyId++}`,
+        classList: "puffer",
         color: ['red', 'yellow', 'green'][Math.floor(Math.random() * 3)],
       }
       

@@ -23,6 +23,18 @@ export default createStore({
 
     speedFactor: 0.5,
 
+		enemyTypes: {
+			puffer : {
+				name: "puffer",
+			},
+			fish : {
+				name: "fish",
+			},
+			eel : {
+				name: "eel",
+			},
+		},
+
 		rounds: 0,
     round: null,
     newRoundObj: {
