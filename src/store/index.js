@@ -35,6 +35,18 @@ export default createStore({
         roundDepth(state) {
             return state.round.depth;
         },
+        wallHeight(state) {
+            return state.round.wallHeight;
+        },
+        walls(state) {
+            return state.round.map;
+        },
+        wallCount(state) {
+            return state.round.map.length;
+        },
+        lastWall(state, getters) {
+            return state.round.map[getters.wallCount-1];
+        },
     },
     mutations: {
         setRound(state) {
@@ -43,10 +55,9 @@ export default createStore({
             state.round.time = 0;
         },
         setRoundTimer(state, value) {
-            state.round.depth = depth;
+            state.round.time = value;
         },
         setRoundDepth(state, value) {
-            state.round.time = value;
             state.round.depth = value;
         },
         addWall(state, value) {
