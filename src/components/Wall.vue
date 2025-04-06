@@ -11,6 +11,7 @@
 </style>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'Wall',
   data() {
@@ -19,9 +20,19 @@ export default {
     }
   },
   computed: {},
-  methods: {},
+  methods: {
+    ...mapActions(['checkForPlayerCollision']),
+    update() {
+      this.checkForPlayerCollision(this.$el);
+      requestAnimationFrame(this.update);
+    },
+  },
   mounted() {
     this.wallOffset = (50 - Math.random() * 100);
+    this.animationFrameId = requestAnimationFrame(this.update);
   },
+  beforeUnmount() {
+    cancelAnimationFrame(this.animationFrameId);
+  }
 }
 </script>
