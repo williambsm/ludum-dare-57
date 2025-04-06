@@ -1,11 +1,16 @@
 <template>
-    <div class="screen game-view">
-      <GameManager />
-      <RoundStats/>
-      <GameManager />
-      <EnemyContainer />
-      <Player />
-    </div>
+  <div id="game-view" class="screen game-view">
+    <GameManager ref="gameManager" />
+    <EnemyManager ref="enemyManager" />
+    <WallManager ref="wallManager" />
+
+    <RoundStats />
+
+    <Player ref="player" />
+    <Enemy v-for="enemy in enemies" :key="enemy.id" :enemyConfig="enemy" />
+    <WallLayer v-for="wall in walls" :key="wall.id" :wall="wall" />
+
+  </div>
 </template>
 
 <style>
@@ -19,25 +24,42 @@
 </style>
 
 <script>
-import GameManager from "@/components/GameManager.vue";
-import Player from "@/components/actors/Player.vue";
-import GameManager from '@/components/GameManager.vue';
+import GameManager from "@/components/containers/GameManager.vue";
+import WallManager from "@/components/containers/WallManager.vue";
+import EnemyManager from "@/components/containers/EnemyManager.vue";
+
 import RoundStats from '@/components/ui/RoundStats.vue';
-import EnemyContainer from "@/components/containers/EnemyContainer.vue";
+
+import Player from "@/components/actors/Player.vue";
+import Enemy from "@/components/actors/Enemy.vue";
+import WallLayer from "@/components/WallLayer.vue";
+
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: "GameView",
   components: {
     GameManager,
-    EnemyContainer,
-    Player,
+    EnemyManager,
+    WallManager,
+
     RoundStats,
-    GameManager
+
+    Player,
+    Enemy,
+    WallLayer,
   },
   data() {
     return {};
   },
-  computed: {},
-  methods: {},
+  computed: {
+    ...mapGetters(['enemies', 'walls']),
+  },
+  methods: {
+    ...mapActions(['createMapBoundsObserver']),
+  },
+  mounted() {
+    this.createMapBoundsObserver(this.$el);
+  }
 };
 </script>
