@@ -10,6 +10,7 @@
     <Enemy v-for="enemy in enemies" :key="`${roundCount}-${enemy.id}`" :enemyConfig="enemy" />
     <WallLayer v-for="wall in walls" :key="`${roundCount}-${wall.id}`" :wall="wall" />
 
+    <div class="overlay"/>
   </div>
 </template>
 
@@ -20,6 +21,13 @@
   height: 720px;
   background-color: #5fc9ea;
   overflow: hidden;
+}
+.game-view .overlay {
+  position: absolute;
+  inset:0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #FFFFFF00,  #000000BB);
 }
 </style>
 
