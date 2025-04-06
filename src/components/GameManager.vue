@@ -86,7 +86,7 @@ export default {
             }
         },
         startTimer() {
-            this.timerInterval = setInterval(() => (this.timePassed += .1), 100);
+            this.timerInterval = setInterval(() => (this.timePassed += .01), 10);
         },
     },
     mounted() {

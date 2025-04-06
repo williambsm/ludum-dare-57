@@ -26,11 +26,12 @@ export default createStore({
         gameName(state) {
             return state.game.name;
         },
+
         roundStarted(state) {
             return state.round.time !== null;
         },
         roundTimer(state) {
-            return state.round.time;
+            return (state.round.time).toFixed(2);
         },
         roundDepth(state) {
             return state.round.depth;

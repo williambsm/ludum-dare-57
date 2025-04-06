@@ -1,5 +1,6 @@
 <template>
     <div class="screen game-view">
+      <GameManager />
       <RoundStats/>
       <GameManager />
       <EnemyContainer />
@@ -18,6 +19,7 @@
 </style>
 
 <script>
+import GameManager from "@/components/GameManager.vue";
 import Player from "@/components/actors/Player.vue";
 import GameManager from '@/components/GameManager.vue';
 import RoundStats from '@/components/ui/RoundStats.vue';
@@ -26,6 +28,7 @@ import EnemyContainer from "@/components/containers/EnemyContainer.vue";
 export default {
   name: "GameView",
   components: {
+    GameManager,
     EnemyContainer,
     Player,
     RoundStats,
