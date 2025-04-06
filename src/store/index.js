@@ -18,6 +18,7 @@ export default createStore({
             score: 0,
             depth: 0,
             wallHeight: 100,
+            wallId: 0,
             map:[]
         },
     },
@@ -39,6 +40,9 @@ export default createStore({
         },
         walls(state) {
             return state.round.map;
+        },
+        wallId(state) {
+            return state.round.wallId;
         },
         wallCount(state) {
             return state.round.map.length;
@@ -62,9 +66,12 @@ export default createStore({
         addWall(state, value) {
             state.round.map.push(value);
         },
-        removeWall(state) {
-            state.round.map.slice(1);
+        removeWall(state, wallId) {
+            state.round.map = state.round.map.filter(wall => wall.id !== wallId);
         },
+        setWallId(state) {
+            state.round.wallId++;
+        }
     },
     actions: {
         startGame(context) {
@@ -76,26 +83,19 @@ export default createStore({
         updateDepth(context, value) {
             context.commit('setRoundDepth', value);
         },
-        removeWall(context){
-            context.commit('removeWall');
+        removeWall(context, wallId){
+            context.commit('removeWall', wallId);
             context.dispatch('addWall');
         },
         addWall(context){
-            // might add some logic here to change 'biomes' at certain depths, etc. this might change the neww wall's height
-            
-            const newWallHeight = context.getters.wallHeight;
-
-            let lastWall = context.getters.wallCount === 0
-            ? { id : 0, bottom: 0, height: 0 } 
-            : context.getters.lastWall;
-
-            const newWall = { 
-                id : lastWall.id + 1, 
-                height: newWallHeight, 
-                // bottom: lastWall.height + lastWall.bottom,
-                bottom: newWallHeight * (lastWall.id),
+            const newWall = {
+                id : context.getters.wallId,
+                height: context.getters.wallHeight,
+                bottom: context.getters.wallHeight * (context.getters.walls.length),
                 biome: 'beach',
             };
+
+            context.commit('setWallId');
             context.commit('addWall', newWall);
         },
     },

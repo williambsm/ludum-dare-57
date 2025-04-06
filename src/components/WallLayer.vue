@@ -42,6 +42,9 @@ export default {
   },
   methods: {
     ...mapActions(['addWall', 'removeWall']),
+    destroy() {
+      this.removeWall(this.wall.id);
+    }
   },
   mounted() {
     this.height = this.wall.height;
@@ -51,13 +54,13 @@ export default {
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
           this.hasIntersected = true;
           this.isIntersecting = true;
         } else {
           this.isIntersecting = false;
           if (this.hasIntersected) {
-            this.removeWall();
+            this.destroy();
           }
         }
       });

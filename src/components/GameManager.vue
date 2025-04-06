@@ -1,6 +1,6 @@
 <template>
     <div class="world">
-        <WallLayer v-for="(wall, index) in walls" :key="index" :wall="wall"  />
+        <WallLayer v-for="wall in walls" :key="wall.id" :wall="wall" />
     </div>
 </template>
 
