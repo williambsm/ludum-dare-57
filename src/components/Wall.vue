@@ -4,7 +4,8 @@
 
 <style>
   .wall{
-      height:100%;
+      height:calc(100% + 10px);
+      margin-top:-5px;
       width:300px;
       background: burlywood;
   }

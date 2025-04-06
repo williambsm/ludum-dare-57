@@ -10,7 +10,6 @@
 .wall-layer {
   position: absolute !important;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: bottom;
   justify-content: space-between;
