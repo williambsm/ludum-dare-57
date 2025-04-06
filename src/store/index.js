@@ -64,22 +64,7 @@ export default createStore({
             state.round.map.push(value);
         },
         removeWall(state) {
-            console.log("removing wall more");
             state.round.map.slice(1);
-            // state.round.map.slice(0,1);
-            // Vue.delete(state.round.map, 0);
-            // state.items = state.items.slice(1);
-            // state.round.map.slice(1);
-            // console.log(state.round.map);
-            // state.round.map = state.round.map.slice(1);
-            // console.log(state.round.map);
-            // state.round.map = state.round.map.slice(1);
-
-            
-            // Splice removes the first item of the array
-
-            // This line ensures Vue reacts to the change if using Vue 2.x
-            // state.round.map = [...state.round.map.splice(1)]; // Creates a new array reference
         },
     },
     actions: {
@@ -94,7 +79,6 @@ export default createStore({
         },
 
         removeWall(context){
-            console.log("removing wall");
             context.commit("removeWall");
             context.dispatch("addWall");
         },
@@ -107,8 +91,6 @@ export default createStore({
             ? { id : 0, bottom: 0, height: 0 } 
             : context.getters.lastWall;
 
-            console.log("lastWall");
-            console.log(lastWall);
             const newWall = { 
                 id : lastWall.id + 1, 
                 height: newWallHeight, 

@@ -84,10 +84,7 @@ export default {
             });            
         },
         createInitialWallLayers() {
-            console.log("createInitialWallLayers");
-            // this.walls = Array(this.numberOfWalls).fill(null); 
-            for(var i = 0; i < this.numberOfWalls; i ++){
-                console.log("loggin");
+            for(let i = 0; i < this.numberOfWalls; i ++){
                 this.addWall();
             }
         },

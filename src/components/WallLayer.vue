@@ -50,21 +50,16 @@ export default {
         this.bottom = this.wall.bottom;
 
         const mapScreen = document.querySelector('.world');
-        console.log(mapScreen);
 
         // Create an intersection observer
         const observer = new IntersectionObserver((entries, observer) => {
-            console.log("observer");
             entries.forEach(entry => {
-                console.log("entry");
                     if (entry.isIntersecting) {
                         this.hasIntersected = true;
-                        console.log("intersecting");
                         this.isIntersecting = true;
                     } else {
                         this.isIntersecting = false;
-                        if (this.hasIntersected){
-                            console.log("not intersecting");
+                        if (this.hasIntersected) {
                             this.removeWall();
                         }
                     }
