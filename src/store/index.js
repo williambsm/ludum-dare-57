@@ -24,11 +24,12 @@ export default createStore({
         gameName(state) {
             return state.game.name;
         },
+
         roundStarted(state) {
             return state.round.time !== null;
         },
         roundTimer(state) {
-            return state.round.time;
+            return (state.round.time).toFixed(2);
         },
         roundDepth(state) {
             return state.round.depth;
@@ -41,10 +42,10 @@ export default createStore({
             state.round.time = 0;
         },
         setRoundTimer(state, value) {
-            state.round.depth = depth;
+            state.round.time = value;
         },
         setRoundDepth(state, value) {
-            state.round.time = value;
+            state.round.depth = value;
         },
     },
     actions: {
