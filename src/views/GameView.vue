@@ -1,10 +1,14 @@
 <template>
     <div class="screen game-view">
-      <GameManager />
+      <GameManager ref="gameManager"/>
+      <WallManager ref="wallManager"/>
+      <EnemyManager ref="enemyManager"/>
+      
       <RoundStats/>
-      <GameManager />
-      <EnemyContainer />
-      <Player />
+      
+      <Player ref="player" />
+      <Enemy v-for="enemy in enemies" :key="enemy.id" :enemyConfig="enemy" />
+
     </div>
 </template>
 
@@ -19,25 +23,35 @@
 </style>
 
 <script>
-import GameManager from "@/components/GameManager.vue";
-import Player from "@/components/actors/Player.vue";
-import GameManager from '@/components/GameManager.vue';
+import GameManager from "@/components/containers/GameManager.vue";
+import WallManager from "@/components/containers/WallManager.vue";
+import EnemyManager from "@/components/containers/EnemyManager.vue";
+
 import RoundStats from '@/components/ui/RoundStats.vue';
-import EnemyContainer from "@/components/containers/EnemyContainer.vue";
+
+import Player from "@/components/actors/Player.vue";
+import Enemy from "@/components/actors/Enemy.vue";
+
+import { mapGetters } from 'vuex';
 
 export default {
   name: "GameView",
   components: {
     GameManager,
-    EnemyContainer,
-    Player,
+    WallManager,
+    EnemyManager,
+
     RoundStats,
-    GameManager
+
+    Player,
+    Enemy,
   },
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['enemies']),
+  },
   methods: {},
 };
 </script>

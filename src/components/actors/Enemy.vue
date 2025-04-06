@@ -12,21 +12,24 @@
 </style>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'Enemy',
   props: ['enemyConfig'],
-  emits: ['die'],
   components: {},
   data() {
     return {
-      fallSpeed: 0.2,
       color: 'red',
       x: 0,
       y: -20,
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['fallSpeed']),
+  },
   methods: {
+    ...mapActions(['removeEnemy']),
     update() {
       this.y = this.y + this.fallSpeed;
 
@@ -35,7 +38,7 @@ export default {
       requestAnimationFrame(this.update);
     },
     die() {
-      this.$emit('die', this.id);
+      this.removeEnemy(this.id);
     }
   },
   mounted() {

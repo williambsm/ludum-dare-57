@@ -48,7 +48,7 @@ import WallLayer from "@/components/WallLayer.vue";
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-    name: 'GameManager',
+    name: 'WallManager',
     components: {
         WallLayer,
     },
