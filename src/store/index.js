@@ -24,6 +24,7 @@ export default createStore({
     speedFactor: 0.5,
 
     round: {
+      player: null,
       size: 5,
       difficulty: "easy",
       time: null,
@@ -191,6 +192,44 @@ export default createStore({
     subscribeToMapBoundsObserver(context, element) {
       element.classList.add("not-intersected");
       context.commit("subscribeToMapBoundsObserver", element);
+    },
+
+    gameover(context) {
+      console.log("gameover");
+    },
+
+    checkForCollision(context, els) {
+      var el1 = els.el1;
+      var el2 = els.el2;
+
+      // Div 1 data
+      var el1_rect = el1.getBoundingClientRect();
+      var el1_height = el1_rect.height;
+      var el1_width = el1_rect.width;
+      var el1_distance_from_top = el1_rect.top + el1_height;
+      var el1_distance_from_left = el1_rect.left + el1_width;
+
+      // Div 2 data
+      var el2_rect = el2.getBoundingClientRect();
+      var el2_height = el2_rect.height;
+      var el2_width = el2_rect.width;
+      var el2_distance_from_top = el2_rect.top + el2_height;
+      var el2_distance_from_left = el2_rect.left + el2_width;
+
+      var not_colliding =
+        el1_distance_from_top < el2_rect.top ||
+        el1_rect.top > el2_distance_from_top ||
+        el1_distance_from_left < el2_rect.left ||
+        el1_rect.left > el2_distance_from_left;
+      // Return whether it IS colliding
+      if (!not_colliding) {
+        context.dispatch("gameover");
+      }
+    },
+
+    checkForPlayerCollision(context, el) {
+      var els = { el1: context.state.round.player, el2: el };
+      context.dispatch("checkForCollision", els);
     },
   },
   modules: {},
