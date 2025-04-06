@@ -97,13 +97,11 @@ export default createStore({
     },
     // WALLS
     addWall(state, value) {
+      state.round.wallId++;
       state.round.map.push(value);
     },
     removeWall(state, wallId) {
       state.round.map = state.round.map.filter((wall) => wall.id !== wallId);
-    },
-    setWallId(state) {
-      state.round.wallId++;
     },
   },
   actions: {
@@ -126,6 +124,7 @@ export default createStore({
     },
     // WALLS
     removeWall(context, wallId) {
+			console.log(`remove: ${wallId}`);
       context.commit("removeWall", wallId);
       context.dispatch("addWall");
     },
@@ -136,7 +135,6 @@ export default createStore({
         bottom: context.getters.wallHeight * context.getters.walls.length,
         biome: "beach",
       };
-      context.commit("setWallId");
       context.commit("addWall", newWall);
     },
   },
