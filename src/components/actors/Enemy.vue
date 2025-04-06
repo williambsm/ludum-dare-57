@@ -21,6 +21,7 @@ export default {
   components: {},
   data() {
     return {
+      id: null,
       color: 'red',
       x: 0,
       y: -20,
