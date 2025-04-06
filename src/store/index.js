@@ -53,6 +53,10 @@ export default createStore({
     roundStarted(state) {
       return state.round !== null;
     },
+    roundPlayer(state, getters) {
+			if(!getters.roundStarted) return null;
+      return state.round.player;
+    },
     roundLost(state) {
       return state.round !== null && state.round.lost;
     },

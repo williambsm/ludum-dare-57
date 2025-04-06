@@ -6,7 +6,7 @@
 
     <RoundStats />
 
-    <Player ref="player" />
+    <Player />
     <Enemy v-for="enemy in enemies" :key="`${roundCount}-${enemy.id}`" :enemyConfig="enemy" />
     <WallLayer v-for="wall in walls" :key="`${roundCount}-${wall.id}`" :wall="wall" />
 
