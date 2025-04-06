@@ -21,8 +21,7 @@ export default {
     computed: {},
     methods: {},
     mounted() {
-        this.wallOffset = (50 - Math.random()*100); 
-
+        this.wallOffset = (50 - Math.random()*100);
     },
 }
 </script>

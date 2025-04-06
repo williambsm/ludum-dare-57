@@ -12,7 +12,6 @@
     width:100%;
     background-color: rgba(0,0,0,0.1);
     display:flex;
-    align-items: bottom;
     justify-content: space-between;
     flex-shrink: 0;
  }

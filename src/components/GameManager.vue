@@ -44,11 +44,8 @@
 </style>
 
 <script>
-
 import WallLayer from "@/components/WallLayer.vue";
-
 import { mapActions, mapGetters } from 'vuex';
-
 
 export default {
     name: 'GameManager',
@@ -91,14 +88,10 @@ export default {
         startTimer() {
             this.timerInterval = setInterval(() => (this.timePassed += .1), 100);
         },
-        
-       
     },
     mounted() {
         this.createInitialWallLayers();
         this.startTimer();
-
     },
-
 }
 </script>
