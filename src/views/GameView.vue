@@ -7,8 +7,8 @@
     <RoundStats />
 
     <Player ref="player" />
-    <Enemy v-for="enemy in enemies" :key="enemy.id" :enemyConfig="enemy" />
-    <WallLayer v-for="wall in walls" :key="wall.id" :wall="wall" />
+    <Enemy v-for="enemy in enemies" :key="`${roundCount}-${enemy.id}`" :enemyConfig="enemy" />
+    <WallLayer v-for="wall in walls" :key="`${roundCount}-${wall.id}`" :wall="wall" />
 
   </div>
 </template>
@@ -53,13 +53,18 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(['enemies', 'walls']),
+    ...mapGetters(['enemies', 'walls', 'roundCount']),
   },
   methods: {
-    ...mapActions(['createMapBoundsObserver']),
+    ...mapActions(['destroyMapBoundsObserver','createMapBoundsObserver']),
+  },
+  created() {    
+    console.log("created");
+    this.destroyMapBoundsObserver();
+    this.createMapBoundsObserver(this.$el);
   },
   mounted() {
-    this.createMapBoundsObserver(this.$el);
+    console.log("mounted");
   }
 };
 </script>

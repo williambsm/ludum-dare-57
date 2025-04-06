@@ -1,7 +1,7 @@
 <template></template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'EnemyManager',  
@@ -11,10 +11,11 @@ export default {
       enemyId: 0,
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['roundCount']),
+  },
   methods: {
-    ...mapActions(['addEnemy']),
-    
+    ...mapActions(['addEnemy']),    
     update() {
       const spawn = Math.floor(Math.random() * 101);
       if (spawn < 1) {
@@ -27,7 +28,7 @@ export default {
     spawnEnemy() {
       // Determine what enemy to spawn based on depth/region, etc.
       const enemyConfig = {
-        id: this.enemyId++,
+        id: `${this.roundCount}-${this.enemyId++}`,
         color: ['red', 'yellow', 'green'][Math.floor(Math.random() * 3)],
       }
       

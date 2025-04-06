@@ -12,6 +12,7 @@ export default {
     return {
       timePassed: 0,
       timerInterval: null,
+      removed: false,
     }
   },
   computed: {
@@ -25,6 +26,7 @@ export default {
   methods: {
     ...mapActions(['updateTimer']),    
     update() {
+      if (this.removed) return;
       this.moveMap();
       requestAnimationFrame(this.update);
     },
@@ -47,12 +49,27 @@ export default {
       });
     },
   },
-  mounted() {
+  created() {
+    console.log("created game manager")
+    this.removed = false;
+    
     this.startTimer();
     this.animationFrameId = requestAnimationFrame(this.update);
   },
+  mounted() {
+    console.log("mounted game manager");
+  },
+  beforeDestroy() {
+    console.log("before destroy game manager");
+  },
   beforeUnmount() {
+    this.removed = true;    
+    console.log("before unmount game manager");
     cancelAnimationFrame(this.animationFrameId);
-  }
+  },
+  destroyed() {
+    console.log("destroyed game manager");
+  },
+  
 }
 </script>
