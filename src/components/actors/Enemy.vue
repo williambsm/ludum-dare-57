@@ -1,6 +1,7 @@
 <template>
   <div class="enemy map-object" :data-id="id"
-    :style="{ left: x + '%', top: y + '%', backgroundColor: color, transform: 'translateY(0px)' }"></div>
+    :style="{ left: x + '%', top: y + '%', backgroundColor: color, transform: 'translateY(0px)' }">
+    <label>{{ enemyConfig.type }}</label></div>
 </template>
 
 <style>
@@ -9,6 +10,11 @@
   width: 50px;
   height: 50px;
   background-color: red;
+}
+.enemy label{
+  position:absolute;
+  bottom:100%;
+  color:red;
 }
 </style>
 
@@ -41,6 +47,20 @@ export default {
     },
     die() {
       this.removeEnemy(this.id);
+    },
+
+    // See player, when player collides with their vision
+
+    // Attack
+    // speed towards player (swordfish), e
+    // 
+    // 
+
+
+    setStartingPosition() {
+      // Spawn above screen between walls.
+      // Spawn above screen on wall
+      // Span below screen between walls
     }
   },
   mounted() {

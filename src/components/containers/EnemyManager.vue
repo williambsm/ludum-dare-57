@@ -12,12 +12,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['roundCount']),
+    ...mapGetters(['roundCount', "currentBiomeEnemyList"]),
   },
   methods: {
     ...mapActions(['addEnemy']),    
     update() {
       const spawn = Math.floor(Math.random() * 101);
+      // THIS NEEDS TO SCALE WITH DIFFICULTY SETTING, AND SCORE/DEPTH/TIME, etc,
       if (spawn < 1) {
         this.spawnEnemy();
       }
@@ -26,12 +27,12 @@ export default {
     },
   
     spawnEnemy() {
-      // Determine what enemy to spawn based on depth/region, etc.
+      const enemyTypes = this.currentBiomeEnemyList;
+      const enemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
       const enemyConfig = {
         id: `${this.roundCount}-${this.enemyId++}`,
-        color: ['red', 'yellow', 'green'][Math.floor(Math.random() * 3)],
-      }
-      
+        type: enemyType,
+      }      
       this.addEnemy(enemyConfig);
     },
   },
