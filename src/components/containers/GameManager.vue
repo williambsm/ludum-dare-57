@@ -36,7 +36,6 @@ export default {
         const transform = element.style.transform;
         let translateY = 0;
         if (transform && transform.includes('translateY')) {
-          console.log(transform);
             const match = transform.match(/translateY\(([-\d.]+)px\)/);
             if (match) {
                 translateY = parseFloat(match[1]);

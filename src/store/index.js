@@ -21,7 +21,7 @@ export default createStore({
       },
     },
 
-    speedFactor: 0.1,
+    speedFactor: 0.5,
 
     round: {
       size: 5,
@@ -33,6 +33,7 @@ export default createStore({
       wallHeight: 100,
       wallId: 0,
       map: [],
+      mapBoundsObserver: null,
     },
   },
   getters: {
@@ -55,7 +56,7 @@ export default createStore({
     enemies(state) {
       return state.round.enemies;
     },
-		// WALLS
+    // WALLS
     wallHeight(state) {
       return state.round.wallHeight;
     },
@@ -76,8 +77,9 @@ export default createStore({
     // ROUND
     setRound(state) {
       state.round.score = 0;
-      state.round.depth = state.difficulty[state.round.difficulty]['initialDepth'];
-      state.round.size = state.difficulty[state.round.difficulty]['playerSize'];
+      state.round.depth =
+        state.difficulty[state.round.difficulty]["initialDepth"];
+      state.round.size = state.difficulty[state.round.difficulty]["playerSize"];
       state.round.time = 0;
     },
     setRoundTimer(state, value) {
@@ -103,6 +105,51 @@ export default createStore({
     removeWall(state, wallId) {
       state.round.map = state.round.map.filter((wall) => wall.id !== wallId);
     },
+    // MAP
+    createMapBoundsObserver(state, gameViewEl) {
+      state.round.mapBoundsObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove("not-intersected");
+            } else {
+              if (!entry.target.classList.contains("not-intersected")) {
+                const elId = entry.target.dataset.id;
+                if (entry.target.classList.contains("wall-layer")) {
+                  // REMOVE WALL
+                  state.round.map = state.round.map.filter(
+                    (wall) => wall.id != elId
+                  );
+                  // ADD WALL
+                  state.round.wallId = state.round.wallId + 1;
+                  const newWall = {
+                    id: state.round.wallId,
+                    height: state.round.wallHeight,
+                    bottom: state.round.wallHeight * state.round.map.length,
+                    biome: "beach",
+                  };
+                  state.round.map.push(newWall);
+                } else if (entry.target.classList.contains("enemy")) {
+                  // REMOVE ENEMY
+                  state.round.enemies = state.round.enemies.filter(
+                    (enemy) => enemy.id != elId
+                  );
+                }
+              }
+            }
+          });
+        },
+        {
+          // Options for the observer: we want to detect any intersection
+          root: gameViewEl,
+          rootMargin: "0px",
+          threshold: 0,
+        }
+      );
+    },
+    subscribeToMapBoundsObserver(state, element) {
+      state.round.mapBoundsObserver.observe(element);
+    },
   },
   actions: {
     // ROUND
@@ -124,7 +171,7 @@ export default createStore({
     },
     // WALLS
     removeWall(context, wallId) {
-			console.log(`remove: ${wallId}`);
+      console.log(`remove: ${wallId}`);
       context.commit("removeWall", wallId);
       context.dispatch("addWall");
     },
@@ -136,6 +183,14 @@ export default createStore({
         biome: "beach",
       };
       context.commit("addWall", newWall);
+    },
+    // MAP
+    createMapBoundsObserver(context, gameViewEl) {
+      context.commit("createMapBoundsObserver", gameViewEl);
+    },
+    subscribeToMapBoundsObserver(context, element) {
+      element.classList.add("not-intersected");
+      context.commit("subscribeToMapBoundsObserver", element);
     },
   },
   modules: {},

@@ -1,5 +1,5 @@
 <template>
-  <div class="wall-layer map-object" :style="{ height: height + 'px', bottom: bottom + 'px', transform: 'translateY(0px)'}">
+  <div class="wall-layer map-object" :data-id="wall.id" :style="{ height: height + 'px', bottom: bottom + 'px', transform: 'translateY(0px)'}">
     <wall class="left" />
     {{ wall.id }} 
     <wall class="right" />
@@ -20,7 +20,7 @@
 
 <script>
 import Wall from "@/components/Wall.vue";
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'WallLayer',
@@ -35,33 +35,14 @@ export default {
       hasNotIntersected: true,
     }
   },
-  computed: {
-    ...mapGetters(['wallHeight']),},
+  computed: {},
   methods: {
-    ...mapActions(['removeWall']),
+    ...mapActions(['subscribeToMapBoundsObserver']),
   },
   mounted() {
     this.height = this.wall.height;
     this.bottom = this.wall.bottom;
-
-    const gameView = document.querySelector('#game-view');
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.hasNotIntersected = false;
-        } else {
-          if(!this.hasNotIntersected){
-            this.removeWall(this.wall.id);
-          }
-        }
-      });
-    }, {
-      // Options for the observer: we want to detect any intersection
-      root: gameView, // Use the viewport as the root
-      rootMargin: '0px',
-      threshold: 0 // 10% of the target element needs to be visible
-    });
-    observer.observe(this.$el);
+    this.subscribeToMapBoundsObserver(this.$el);
   }
 }
 </script>

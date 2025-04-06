@@ -1,14 +1,15 @@
 <template>
-  <div class="enemy" :style="{ left: x + '%', top: y + '%', backgroundColor: color }"></div>
+  <div class="enemy map-object" :data-id="id"
+    :style="{ left: x + '%', top: y + '%', backgroundColor: color, transform: 'translateY(0px)' }"></div>
 </template>
 
 <style>
-  .enemy {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: red;
-  }
+.enemy {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
 </style>
 
 <script>
@@ -29,11 +30,11 @@ export default {
     ...mapGetters(['fallSpeed']),
   },
   methods: {
-    ...mapActions(['removeEnemy']),
+    ...mapActions(['removeEnemy', 'subscribeToMapBoundsObserver']),
     update() {
-      this.y = this.y + this.fallSpeed;
+      // this.y = this.y + this.fallSpeed;
 
-      if (this.y > 120) this.die();
+      // if (this.y > 120) this.die();
 
       requestAnimationFrame(this.update);
     },
@@ -45,6 +46,8 @@ export default {
     this.id = this.enemyConfig.id;
     this.color = this.enemyConfig.color;
     this.x = Math.floor(Math.random() * 101);
+
+    this.subscribeToMapBoundsObserver(this.$el);
 
     this.animationFrameId = requestAnimationFrame(this.update);
   },

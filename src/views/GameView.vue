@@ -1,17 +1,16 @@
 <template>
-    <div id="game-view" class="screen game-view">
-      <GameManager ref="gameManager"/>
-      <EnemyManager ref="enemyManager"/>
-      <WallManager ref="wallManager"/>
-      
-      
-      <RoundStats/>
-      
-      <Player ref="player" />
-      <Enemy v-for="enemy in enemies" :key="enemy.id" :enemyConfig="enemy" />
-      <WallLayer v-for="wall in walls" :key="wall.id" :wall="wall" />
+  <div id="game-view" class="screen game-view">
+    <GameManager ref="gameManager" />
+    <EnemyManager ref="enemyManager" />
+    <WallManager ref="wallManager" />
 
-    </div>
+    <RoundStats />
+
+    <Player ref="player" />
+    <Enemy v-for="enemy in enemies" :key="enemy.id" :enemyConfig="enemy" />
+    <WallLayer v-for="wall in walls" :key="wall.id" :wall="wall" />
+
+  </div>
 </template>
 
 <style>
@@ -20,7 +19,7 @@
   width: 1280px;
   height: 720px;
   background-color: #5fc9ea;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 </style>
 
@@ -35,7 +34,7 @@ import Player from "@/components/actors/Player.vue";
 import Enemy from "@/components/actors/Enemy.vue";
 import WallLayer from "@/components/WallLayer.vue";
 
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: "GameView",
@@ -56,6 +55,11 @@ export default {
   computed: {
     ...mapGetters(['enemies', 'walls']),
   },
-  methods: {},
+  methods: {
+    ...mapActions(['createMapBoundsObserver']),
+  },
+  mounted() {
+    this.createMapBoundsObserver(this.$el);
+  }
 };
 </script>
