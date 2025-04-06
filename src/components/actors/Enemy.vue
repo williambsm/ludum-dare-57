@@ -32,10 +32,13 @@ export default {
   },
   methods: {
     ...mapActions(['removeEnemy', 'subscribeToMapBoundsObserver']),
+    ...mapActions(['checkForPlayerCollision']),
     update() {
       // this.y = this.y + this.fallSpeed;
 
       // if (this.y > 120) this.die();
+
+      this.checkForPlayerCollision(this.$el);
 
       requestAnimationFrame(this.update);
     },
