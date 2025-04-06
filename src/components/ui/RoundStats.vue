@@ -1,7 +1,7 @@
 <template>
     <div class="round-stats">
       <div class="round-timer">{{ roundTimer }}</div>
-      <div class="round-depth">{{ roundDepth }}</div>
+      <div class="round-depth">{{ depthScore }}</div>
     </div>
 </template>
 
@@ -25,7 +25,10 @@ export default {
       return {}
   },
   computed: {
-      ...mapGetters(['gameName','roundTimer', 'roundDepth']),
+      ...mapGetters(['gameName','roundTimer', 'roundDepth', 'roundCount']),
+      depthScore(){
+        return parseInt(this.roundDepth);
+      },
   },
   methods: {
 

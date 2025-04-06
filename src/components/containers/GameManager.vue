@@ -16,7 +16,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['fallSpeed']),
+    ...mapGetters(['fallSpeed', 'roundDepth']),
   },
   watch: {
     timePassed(newValue) {
@@ -24,7 +24,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['updateTimer']),    
+    ...mapActions(['updateTimer', 'updateDepth']),    
     update() {
       if (this.removed) return;
       this.moveMap();
@@ -47,6 +47,8 @@ export default {
             }
         }
       });
+
+      this.updateDepth((this.roundDepth - (this.fallSpeed/ 300)));
     },
   },
   created() {

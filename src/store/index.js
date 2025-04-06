@@ -62,7 +62,8 @@ export default createStore({
     roundTimer(state) {
       return state.round.time.toFixed(2);
     },
-    roundDepth(state) {
+    roundDepth(state, getters) {
+			if(!getters.roundStarted) return 0;
       return state.round.depth;
     },
     fallSpeed(state) {
@@ -102,8 +103,8 @@ export default createStore({
     setRound(state) {
 			state.rounds++ 
 			state.round = {...state.newRoundObj};
-			state.difficulty[state.round.difficulty]["initialDepth"];
       state.round.size = state.difficulty[state.round.difficulty]["playerSize"];
+      state.round.depth = state.difficulty[state.round.difficulty]["initialDepth"];
       state.round.time = 0;
 			console.log(state.round);
     },
