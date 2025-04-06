@@ -16,6 +16,8 @@
 </style>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: "Player",
   components: {},
@@ -28,7 +30,9 @@ export default {
       position: 50,
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['round']),
+  },
   methods: {
     update() {
       if (this.move.size && !this.isParalyzed) {
@@ -69,6 +73,8 @@ export default {
 
     document.addEventListener('keydown', this.setMove);
     document.addEventListener('keyup', this.stopMove);
+
+    this.round.player = this.$el;
   },
   beforeUnmount() {
     cancelAnimationFrame(this.animationFrameId);
