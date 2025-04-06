@@ -25,6 +25,7 @@ export default {
       color: 'red',
       x: 0,
       y: -20,
+      removed: false,
     }
   },
   computed: {
@@ -34,12 +35,8 @@ export default {
     ...mapActions(['removeEnemy', 'subscribeToMapBoundsObserver']),
     ...mapActions(['checkForPlayerCollision']),
     update() {
-      // this.y = this.y + this.fallSpeed;
-
-      // if (this.y > 120) this.die();
-
+      if (this.removed) return;
       this.checkForPlayerCollision(this.$el);
-
       requestAnimationFrame(this.update);
     },
     die() {
@@ -56,6 +53,7 @@ export default {
     this.animationFrameId = requestAnimationFrame(this.update);
   },
   beforeUnmount() {
+    this.removed = true;    
     cancelAnimationFrame(this.animationFrameId);
   }
 }
