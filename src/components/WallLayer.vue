@@ -1,8 +1,8 @@
 <template>
-  <div class="wall-layer mapObject" :style="{ height: height + 'px',  bottom: bottom + 'px'}">
-    <wall class="left"/>
-    {{ wall.id }} - {{  hasIntersected }} - {{  isIntersecting }} - {{ bottom }}
-    <wall class="right"/>
+  <div class="wall-layer mapObject" :style="{ height: height + 'px',  bottom: bottom + 'px' }">
+    <wall class="left" />
+    {{ wall.id }} - {{ hasIntersected }} - {{ isIntersecting }} - {{ bottom }}
+    <wall class="right" />
   </div>
 </template>
 
