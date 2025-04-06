@@ -23,52 +23,51 @@ import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 
 export default {
-    name: 'WallLayer',
-    props: ['wall'],
-    emits: ['outside'],
-    components: {
-      Wall
-    },
-    data() {
-      return {
-        height: 10,
-        bottom: 0,
-        hasIntersected: false,
-        isIntersecting: false,
-      }
-    },
-    computed: {
-      ...mapGetters(['roundDepth']),
-    },
-    methods: {
-      ...mapActions(['addWall', 'removeWall']),
-    },
-    mounted(){
-      this.height = this.wall.height;
-      this.bottom = this.wall.bottom;
+  name: 'WallLayer',
+  props: ['wall'],
+  emits: ['outside'],
+  components: {
+    Wall
+  },
+  data() {
+    return {
+      height: 10,
+      bottom: 0,
+      hasIntersected: false,
+      isIntersecting: false,
+    }
+  },
+  computed: {
+    ...mapGetters(['roundDepth']),
+  },
+  methods: {
+    ...mapActions(['addWall', 'removeWall']),
+  },
+  mounted() {
+    this.height = this.wall.height;
+    this.bottom = this.wall.bottom;
 
-      const mapScreen = document.querySelector('.world');
+    const mapScreen = document.querySelector('.world');
 
-      // Create an intersection observer
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            this.hasIntersected = true;
-            this.isIntersecting = true;
-          } else {
-            this.isIntersecting = false;
-            if (this.hasIntersected) {
-              this.removeWall();
-            }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          this.hasIntersected = true;
+          this.isIntersecting = true;
+        } else {
+          this.isIntersecting = false;
+          if (this.hasIntersected) {
+            this.removeWall();
           }
-        });
-      }, {
-        root: mapScreen,
-        rootMargin: '0px',
-        threshold: 0,
+        }
       });
+    }, {
+      root: mapScreen,
+      rootMargin: '0px',
+      threshold: 0,
+    });
 
-      observer.observe(this.$el);
+    observer.observe(this.$el);
   }
 }
 </script>
