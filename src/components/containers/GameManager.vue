@@ -15,7 +15,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['fallSpeed']),},
+    ...mapGetters(['fallSpeed']),
+  },
   watch: {
     timePassed(newValue) {
       this.updateTimer(newValue);
@@ -30,6 +31,7 @@ export default {
     startTimer() {
       this.timerInterval = setInterval(() => (this.timePassed += .01), 10);
     },
+    
     moveMap(){
       const mapObjects = document.querySelectorAll('.map-object');
       mapObjects.forEach((element) => {        
