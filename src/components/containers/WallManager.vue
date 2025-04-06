@@ -19,7 +19,7 @@ export default {
     ...mapActions(['addWall']),    
 
     createInitialWallLayers() {
-      for (let i = 0; i < this.numberOfWalls; i++) {
+      for (let i = 0; i < this.numberOfWalls + 8; i++) {
         this.addWall();
       }
     },

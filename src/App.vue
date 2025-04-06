@@ -5,6 +5,21 @@
     <GameView v-else /> 
 </template>
 
+<style>
+#app {
+  height:100vh;
+  width:100vw;
+}
+.screen {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+
 <script>
 // MIXINS
 // import { StoreMixin } from "@/mixins/StoreMixin.js";
