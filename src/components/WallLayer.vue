@@ -7,6 +7,7 @@
 
 <style>
 .wall-layer {
+  opacity:.2;
   position: absolute !important;
   width: 100%;
   display: flex;

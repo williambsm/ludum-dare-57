@@ -4,23 +4,22 @@
     <EnemyManager ref="enemyManager" />
     <WallManager ref="wallManager" />
 
+    {{ currentBiome }}
     <RoundStats />
 
     <Player />
     <Enemy v-for="enemy in enemies" :key="`${roundCount}-${enemy.id}`" :enemyConfig="enemy" />
     <WallLayer v-for="wall in walls" :key="`${roundCount}-${wall.id}`" :wall="wall" />
 
-    <div class="overlay"/>
+    <!-- <div class="overlay"/> -->
   </div>
 </template>
 
 <style>
 .game-view {
   position: relative;
-  /* width: 1280px; */
-  /* height: 720px; */
   background-color: #5fc9ea;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .game-view .overlay {
   position: absolute;
@@ -62,6 +61,7 @@ export default {
   },
   computed: {
     ...mapGetters(['enemies', 'walls', 'roundCount']),
+    ...mapGetters(['currentBiome']),
   },
   methods: {
     ...mapActions(['destroyMapBoundsObserver','createMapBoundsObserver']),

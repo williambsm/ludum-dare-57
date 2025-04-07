@@ -34,5 +34,20 @@ export const HelperMixin = {
     isPlayerColliding(el) { 
       return this.isColliding(el, this.roundPlayer);      
     },
+    getPlayerCoords() { 
+      return { x: this.getPlayerX(), y : this.getPlayerY()};
+    },
+    getPlayerX() { 
+      return this.roundPlayer.getBoundingClientRect().left;
+    },
+    getPlayerY() { 
+      return this.roundPlayer.getBoundingClientRect().top;
+    },
+    getPlayerWidth() { 
+      return this.roundPlayer.getBoundingClientRect().width;
+    },
+    getPlayerHeight() { 
+      return this.roundPlayer.getBoundingClientRect().height;
+    },
   },
 };

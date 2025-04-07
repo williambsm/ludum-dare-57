@@ -5,8 +5,9 @@
 <style>
   .player {
     position: absolute;
-    bottom: 20%;
+    top: 360px;
     transform: translateX(-50%);
+    /* transform: translateX(-50%) translateY(-50%); */
     width: 50px;
     height: 50px;
     background-color: rgba(255, 255, 255, 0.6);
@@ -28,6 +29,10 @@ export default {
       moveSpeed: .30,
       isParalyzed: false,
       position: 50,
+
+      
+      screenWidth : 1280,
+      screenHeight : 720,
     }
   },
   computed: {
